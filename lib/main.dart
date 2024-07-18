@@ -41,7 +41,7 @@ class _MyappState extends State<MyApp> {
     });
   }
 
-  void _dividir() {
+  void _dividir( ) {
     setState(() {
       final num1 = double.parse(_num1Controller.text);
       final num2 = double.parse(_num2Controller.text);
@@ -70,24 +70,49 @@ class _MyappState extends State<MyApp> {
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(labelText: 'Número 2'),
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _somar,
-                      child: const Text('Somar'),
+                    GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      children: List.generate(10, (index) {
+                        return ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_num1Controller.text.isEmpty) {
+                                _num1Controller.text = index.toString();
+                              } else if (_num2Controller.text.isEmpty) {
+                                _num2Controller.text = index.toString();
+                              }
+                            });
+                          },
+                          child: Text(index.toString()),
+                        );
+                      }),
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                        onPressed: _subtrair, child: const Text('Subtratir')),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                        onPressed: _multiplicar,
-                        child: const Text('Multiplicar')),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                        onPressed: _dividir, child: const Text('Dividir')),
+                    Row(children: [
+                      ElevatedButton(onPressed: _somar, child: const Text('+')),
+                      ElevatedButton(onPressed: _multiplicar, child: const Text('*')),
+                      ElevatedButton(onPressed: _dividir, child: const Text('/')),
+                      ElevatedButton(onPressed: _subtrair, child: const Text('-')),
+                    ],),
+                    // const SizedBox(height: 20),
+                    // ElevatedButton(
+                    //   onPressed: _somar,
+                    //   child: const Text('Somar'),
+                    // ),
+                    // const SizedBox(height: 20),
+                    // ElevatedButton(
+                    //     onPressed: _subtrair, child: const Text('Subtratir')),
+                    // const SizedBox(height: 20),
+                    // ElevatedButton(
+                    //     onPressed: _multiplicar,
+                    //     child: const Text('Multiplicar')),
+                    // const SizedBox(height: 20),
+                    // ElevatedButton(
+                    //     onPressed: _dividir, child: const Text('Dividir')),
                     const SizedBox(height: 20),
                     Text(
-                      'Resultado: $_resultado',
+                      '= $_resultado',
                       style: const TextStyle(fontSize: 20),
                     ),
                   ],
